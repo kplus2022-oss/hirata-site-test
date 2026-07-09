@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://adonai-hirata.netlify.app/sitemap.xml
