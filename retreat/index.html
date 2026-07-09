@@ -89,7 +89,14 @@
            Base
            ============================================================ */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+            /* iOS Safariで横はみ出しがページ縮小を引き起こすのを防ぐ（bodyだけでは効かない） */
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            overflow-x: clip;
+        }
         html.lenis, html.lenis-on { scroll-behavior: auto; }
         html.lenis, html.lenis body { height: auto; }
         body {
@@ -99,10 +106,17 @@
             letter-spacing: 0.1em;
             line-height: 2.1;
             font-size: 16px;
+            width: 100%;
+            max-width: 100%;
             overflow-x: hidden;
+            overflow-x: clip;
             -webkit-font-smoothing: antialiased;
-            word-break: keep-all;
-            overflow-wrap: anywhere;
+            /* 日本語の標準折り返し＋禁則処理。keep-allは長い和文フレーズが
+               グリッド列の最小幅を押し広げて実機ではみ出す（特にiOS Safari）ため使わない。
+               意図した改行は本文中の<br>（.sp/.pc）で制御する */
+            word-break: normal;
+            line-break: strict;
+            overflow-wrap: break-word;
             transition: background-color 2.4s var(--ease-soft), color 2.4s var(--ease-soft);
         }
         @media (min-width: 768px) { body { font-size: 17px; } }
@@ -111,8 +125,13 @@
         .font-en { font-family: var(--serif-en); }
         .wrap { width: min(1120px, 90%); margin-inline: auto; position: relative; }
         .wrap-narrow { width: min(760px, 90%); margin-inline: auto; position: relative; }
+        /* グリッド列がテキストの最小幅で膨張して画面を突き破るのを防ぐ */
+        .basho-grid > div, .taberu-grid > div, .yasumu-grid > div, .faci-grid > div { min-width: 0; }
 
         ::selection { background: var(--gold-soft); }
+
+        /* フレーズ単位で折り返す（語の途中で切れない） */
+        .nw { display: inline-block; white-space: nowrap; }
 
         /* レスポンシブ改行：.sp はスマホのみ、.pc はPCのみ */
         br.sp { display: inline; }
@@ -425,11 +444,13 @@
         .soft { color: var(--ink-soft); }
         .small-note { font-size: 0.77rem; letter-spacing: 0.16em; color: var(--ink-soft); line-height: 2; }
 
-        /* 巨大ゴーストワード */
+        /* 巨大ゴーストワード（横はみ出しを起こさないよう自身の箱でクリップする） */
         .ghost-word {
             position: absolute;
             top: 8%;
-            right: -2%;
+            right: 0;
+            max-width: 100%;
+            overflow: hidden;
             z-index: -1;
             font-family: var(--serif-en);
             font-style: italic;
@@ -443,7 +464,7 @@
             user-select: none;
             white-space: nowrap;
         }
-        .ghost-word.left { right: auto; left: -2%; }
+        .ghost-word.left { right: auto; left: 0; }
 
         /* ガラスカード */
         .veil {
@@ -702,17 +723,17 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(70% 56% at 50% 44%, rgba(247, 246, 242, 0.66) 0%, rgba(247, 246, 242, 0.24) 60%, rgba(247, 246, 242, 0) 100%),
+                radial-gradient(76% 60% at 50% 46%, rgba(247, 246, 242, 0.8) 0%, rgba(247, 246, 242, 0.38) 55%, rgba(247, 246, 242, 0) 100%),
                 linear-gradient(to bottom,
-                    rgba(247, 246, 242, 0.5) 0%,
-                    rgba(247, 246, 242, 0.14) 40%,
-                    rgba(247, 246, 242, 0.26) 72%,
+                    rgba(247, 246, 242, 0.55) 0%,
+                    rgba(247, 246, 242, 0.2) 38%,
+                    rgba(247, 246, 242, 0.32) 72%,
                     #F7F6F2 98%);
         }
         .hero-inner { text-align: center; }
         .hero-date {
             font-family: var(--serif-en);
-            font-size: 0.7rem;
+            font-size: clamp(0.56rem, 3vw, 0.7rem);
             letter-spacing: 0.22em;
             color: var(--ink-soft);
             margin-bottom: clamp(1.8rem, 4vh, 3rem);
@@ -1068,7 +1089,7 @@
             margin-bottom: 0.5rem;
         }
         .gaiyou-name .g-jp { font-size: 0.83rem; letter-spacing: 0.3em; color: var(--ink-soft); }
-        .gaiyou-table { width: 100%; border-collapse: collapse; }
+        .gaiyou-table { width: 100%; table-layout: fixed; border-collapse: collapse; }
         .gaiyou-table th, .gaiyou-table td {
             text-align: left;
             vertical-align: top;
@@ -1382,9 +1403,9 @@
                 <p class="hero-date" data-hero><span class="hd-date">2026.11.21 SAT — 11.22 SUN</span><span class="sep">｜</span><span class="hd-venue">HOLISTIC COLLEGE OF JAPAN</span></p>
                 <h1 class="hero-title">
                     <span class="hero-en" id="heroEn">Holistic Retreat</span>
-                    <span class="hero-jp" data-hero>〜メメントモリに生きる、<br>小さな一泊二日〜</span>
+                    <span class="hero-jp" data-hero>メメントモリに生きる、<br>小さな一泊二日</span>
                 </h1>
-                <p class="hero-sub" data-hero>食べる。感じる。休む。そして語り合う。</p>
+                <p class="hero-sub" data-hero><span class="nw">食べる。</span><span class="nw">感じる。</span><span class="nw">休む。</span><span class="nw">そして語り合う。</span></p>
                 <div class="hero-cta" data-hero>
                     <a href="#gaiyou" class="btn ghost magnetic"><span class="btn-bg"></span><span>開催概要を見る</span></a>
                     <a href="#apply" class="btn fill magnetic"><span class="btn-bg"></span><span>お申し込みはこちら</span></a>
