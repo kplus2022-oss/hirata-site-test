@@ -635,9 +635,18 @@
             transition: border-color 2.4s var(--ease-soft);
         }
         .media-float img { height: 124%; margin-top: -12%; }
+        /* モバイルでは重ねず、右寄せの段組みにする（下の写真を隠さない） */
         @media (max-width: 959px) {
-            .media-float { width: 54%; right: 2%; bottom: -11%; }
+            .media-float {
+                position: static;
+                width: 78%;
+                margin: 0.9rem 0 0 auto;
+                border-width: 3px;
+            }
+            .media-stack { margin-bottom: 0; }
         }
+        /* 重ね写真の中では、キャプションをフロート側と重ならない左下に置く */
+        .media-stack .media-cap { right: auto; left: 10px; }
 
         /* ボタン */
         .btn {
@@ -843,8 +852,16 @@
             text-align: center;
             padding: 2.2rem 7vw;
         }
-        /* JS有効時：積層して中央にピン */
-        .poem.poem-abs { height: 100vh; height: 100svh; }
+        /* JS有効時：stickyで画面に留め、積層した行をスクロールで入れ替える
+           （ScrollTriggerのpinはiOS Safariで固定解除に失敗し
+             後続セクションへ重なる事故があるため使わない） */
+        .poem.poem-abs {
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            height: 100vh;
+            height: 100svh;
+        }
         .poem.poem-abs .poem-line {
             position: absolute;
             inset: 0;
@@ -1106,6 +1123,10 @@
             padding-top: 1.25rem;
         }
         .gaiyou-table td { font-size: 0.93rem; letter-spacing: 0.12em; line-height: 2.15; }
+        /* 狭い画面ではラベル列を詰めて値の幅を確保する */
+        @media (max-width: 480px) {
+            .gaiyou-table th { width: 5.4em; letter-spacing: 0.16em; }
+        }
         .gaiyou-table td .em {
             font-size: 1.24rem;
             letter-spacing: 0.1em;
@@ -1893,6 +1914,106 @@
         }
 
         /* ------------------------------------------------------------
+           文節ベースの改行制御
+           Intl.Segmenterで日本語を語に分け、助詞・句読点・1文字語を
+           直前の語に結合した「文節チャンク」の境界にだけ<wbr>を挿入する。
+           要素をkeep-allにすることで、どの画面幅でも文節の切れ目でしか
+           折り返さない一定の文字組になる。
+           ------------------------------------------------------------ */
+        (function phraseWrap() {
+            if (typeof Intl === 'undefined' || !Intl.Segmenter) return;
+            var seg;
+            try { seg = new Intl.Segmenter('ja', { granularity: 'word' }); } catch (e) { return; }
+
+            /* 前の語に結合する語：全文字がひらがな・句読点・記号のみ（助詞・助動詞・接続表現）。
+               「お部屋」「ご利用」のような ひらがな始まりの複合語 は結合しない */
+            var JOIN_HEAD = /^[ぁ-んゝゞー、。，．・：；！？!?）」』〜%％]+$/;
+            var OPEN_TAIL = /[（「『]$/;
+            var HAS_CJK = /[一-龯々ぁ-んァ-ヶー]/;
+
+            var KATA_END = /[ァ-ヶー]$/;
+            var KATA_START = /^[ァ-ヶー]/;
+            var HONORIFIC_END = /(^|[^一-龯々ァ-ヶー])([おご])$/;
+            var KANJI_NUM = /^[一-龯々0-9０-９]+$/;
+            var DIGIT_END = /[0-9０-９][,，.．]?$/;
+            var DIGIT_START = /^[,，.．]?[0-9０-９]/;
+
+            function chunksOf(text) {
+                var words = [];
+                var it = seg.segment(text);
+                for (var s of it) words.push(s.segment);
+                var chunks = [];
+                words.forEach(function (w) {
+                    var join =
+                        chunks.length > 0 && (
+                            JOIN_HEAD.test(w) ||                    /* 助詞・句読点などは前に付ける */
+                            OPEN_TAIL.test(chunks[chunks.length - 1]) || /* 開き括弧の直後 */
+                            (w.length === 1 && HAS_CJK.test(w))     /* 1文字語の孤立を防ぐ */
+                        );
+                    if (join) { chunks[chunks.length - 1] += w; }
+                    else { chunks.push(w); }
+                });
+                /* 第2パス：カタカナ連続の途中・漢字複合語・数値列には境界を作らず、
+                   行末に取り残された敬語接頭辞「お・ご」は次の語へ送る */
+                var out = [];
+                chunks.forEach(function (c) {
+                    if (out.length > 0) {
+                        var p = out[out.length - 1];
+                        var hono = p.match(HONORIFIC_END);
+                        if (hono && /^[一-龯々]/.test(c)) {
+                            var moved = p.slice(0, -1);
+                            c = hono[2] + c;
+                            if (moved) { out[out.length - 1] = moved; p = moved; }
+                            else { out.pop(); p = out.length ? out[out.length - 1] : ''; }
+                        }
+                        var lead = c.match(/^[一-龯々0-9０-９]+/);
+                        if (p && ((KATA_END.test(p) && KATA_START.test(c)) ||
+                            (KANJI_NUM.test(p) && lead && (p.length + lead[0].length) <= 5) ||
+                            (DIGIT_END.test(p) && DIGIT_START.test(c)))) {
+                            out[out.length - 1] = p + c;
+                            return;
+                        }
+                    }
+                    out.push(c);
+                });
+                return out;
+            }
+
+            function processNode(node) {
+                var text = node.nodeValue;
+                if (!text || !HAS_CJK.test(text) || text.trim().length < 4) return;
+                var chunks = chunksOf(text);
+                if (chunks.length < 2) return;
+                var frag = document.createDocumentFragment();
+                chunks.forEach(function (c, i) {
+                    if (i > 0) frag.appendChild(document.createElement('wbr'));
+                    frag.appendChild(document.createTextNode(c));
+                });
+                node.parentNode.replaceChild(frag, node);
+            }
+
+            var SELECTORS = [
+                '.poem-line', '.lead p', '.day-card p', '.day-card .d-title',
+                '.room-list li', '.anata-list li', '.anata-close',
+                '.gaiyou-table td', '.gaiyou-table td .sub',
+                '.faci-card p', '.apply-intro p', '.small-note',
+                '.apply-alt', '.hero-jp', '.faci-name-role',
+                '.interlude-word .sub-jp', '.meal-badge .mb-jp'
+            ].join(', ');
+
+            document.querySelectorAll(SELECTORS).forEach(function (el) {
+                if (el.dataset.phrased) return;
+                el.dataset.phrased = '1';
+                /* 子孫のテキストノードを収集してから置換（走査中の変更を避ける） */
+                var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+                var nodes = [];
+                while (walker.nextNode()) nodes.push(walker.currentNode);
+                nodes.forEach(processNode);
+                el.style.wordBreak = 'keep-all';
+            });
+        })();
+
+        /* ------------------------------------------------------------
            Three.js — 光の粒子と浮遊するオーブ（昼 → 夕暮れ → 夜 → 朝）
            ------------------------------------------------------------ */
         var sceneState = { night: 0, dusk: 0, scroll: 0, mx: 0, my: 0, tmx: 0, tmy: 0 };
@@ -2223,15 +2344,21 @@
             if (reduced) return;
             var poem = document.getElementById(id);
             if (!poem) return;
+            var section = poem.parentElement;
             poem.classList.add('poem-abs');
             var lines = poem.querySelectorAll('.poem-line');
+            /* stickyの詩をセクションの高さぶんだけ画面に留める（pin不使用）。
+               ランウェイ＝行数×85vh。stickyの移動距離はここから1画面ぶん引いた値になり、
+               最終行が見えたままシームレスに次のセクションへ抜ける */
+            var runway = Math.max(lines.length * 85, 200);
+            section.style.height = runway + 'vh';
+            section.style.height = runway + 'svh';
             var tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: poem.parentElement,
+                    trigger: section,
                     start: 'top top',
-                    end: '+=' + (lines.length * 85) + '%',
-                    scrub: 0.9,
-                    pin: true
+                    end: 'bottom bottom',
+                    scrub: 0.9
                 }
             });
             lines.forEach(function (line, i) {
