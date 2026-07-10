@@ -584,12 +584,30 @@
             content: "";
             position: absolute;
             inset: 0;
+            z-index: 1;
             pointer-events: none;
             background: linear-gradient(to bottom,
                 var(--bg) 0%,
                 rgba(247, 246, 242, 0) 20%,
                 rgba(247, 246, 242, 0) 80%,
                 var(--bg) 100%);
+        }
+        .interlude-morning::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse at center, rgba(42, 38, 32, 0.5) 0%, rgba(42, 38, 32, 0.3) 48%, rgba(42, 38, 32, 0.1) 78%),
+                linear-gradient(to bottom, rgba(42, 38, 32, 0.06) 12%, rgba(42, 38, 32, 0.24) 86%);
+        }
+        .interlude-morning .interlude-word {
+            text-shadow: 0 2px 30px rgba(30, 27, 23, 0.72), 0 1px 2px rgba(30, 27, 23, 0.5);
+        }
+        .interlude-morning .interlude-word .sub-jp {
+            color: rgba(255, 255, 255, 0.96);
+            text-shadow: 0 1px 12px rgba(30, 27, 23, 0.9), 0 1px 2px rgba(30, 27, 23, 0.72);
         }
         .interlude-word {
             position: absolute;
@@ -1637,7 +1655,7 @@
         </section>
 
         <!-- 幕間：朝の光 -->
-        <section class="interlude" aria-hidden="true">
+        <section class="interlude interlude-morning" aria-hidden="true">
             <div class="media-full parallax" data-pfrom="-11" data-pto="11">
                 <img src="./images/web/morning-light.jpg" alt="" loading="lazy">
             </div>
