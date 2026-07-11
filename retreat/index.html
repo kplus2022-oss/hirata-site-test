@@ -888,6 +888,26 @@
             padding: 0 7vw;
             margin: 0;
         }
+        /* 詩の進捗ゲージ：スクロール量に応じて金の線が静かに満ちる */
+        .poem-progress {
+            position: absolute;
+            left: 50%;
+            bottom: max(6vh, 34px);
+            bottom: max(6svh, 34px);
+            transform: translateX(-50%);
+            width: 1px;
+            height: 52px;
+            background: color-mix(in srgb, var(--ink-soft) 28%, transparent);
+            pointer-events: none;
+        }
+        .poem-progress .pp-fill {
+            position: absolute;
+            inset: 0;
+            background: var(--gold);
+            transform: scaleY(0);
+            transform-origin: top center;
+        }
+
         .poem-kicker {
             position: absolute;
             top: 10vh;
@@ -2371,6 +2391,19 @@
             var runway = Math.max(lines.length * 85, 200);
             section.style.height = runway + 'vh';
             section.style.height = runway + 'svh';
+            /* スクロールが進んでいることを静かに伝える進捗ゲージ */
+            var prog = document.createElement('div');
+            prog.className = 'poem-progress';
+            prog.setAttribute('aria-hidden', 'true');
+            var fill = document.createElement('span');
+            fill.className = 'pp-fill';
+            prog.appendChild(fill);
+            poem.appendChild(prog);
+            gsap.fromTo(fill, { scaleY: 0 }, {
+                scaleY: 1,
+                ease: 'none',
+                scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.4 }
+            });
             var tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
