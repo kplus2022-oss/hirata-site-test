@@ -1062,13 +1062,14 @@
         .yasumu-media { aspect-ratio: 4 / 3; }
         .tate {
             writing-mode: vertical-rl;
+            white-space: nowrap;
             font-size: 0.78rem;
             letter-spacing: 0.5em;
             color: var(--ink-soft);
             position: absolute;
             bottom: 10%;
             right: 4%;
-            height: 15em;
+            height: auto;
             pointer-events: none;
             display: none;
         }
@@ -1663,11 +1664,11 @@
                     </div>
                     <div class="media-stack">
                         <div class="media yasumu-media parallax clipreveal">
-                            <img src="./images/web/guest-room.jpg" alt="客室のイメージ" loading="lazy">
-                            <span class="media-cap">客室イメージ｜実写真に差し替え予定</span>
+                            <img src="./images/web/guestroom1.jpg" alt="カレッジ2階の客室（シングルルーム）" loading="lazy">
+                            <span class="media-cap">カレッジ2階の客室</span>
                         </div>
                         <div class="media media-float parallax clipreveal" data-pfrom="-9" data-pto="7">
-                            <img src="./images/web/morning-tea.jpg" alt="朝の静かな時間のイメージ" loading="lazy">
+                            <img src="./images/web/guestroom2.jpg" alt="2名1室でご利用いただける客室" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -1746,7 +1747,7 @@
                             </tr>
                             <tr data-reveal>
                                 <th scope="row">宿泊</th>
-                                <td>シングルルームを基本としております。<span class="sub">ご夫婦・親子・ご兄弟など、お二人で一室をご利用の場合は、お一人30,000円（税込）となります。お申込み状況により、お部屋のご利用についてご相談させていただく場合がございます。</span></td>
+                                <td>シングルルームを基本としております。<span class="sub">ご夫婦・親子・ご兄弟等で同室をご希望の場合は、お一人29,700円（税込）となります。お申込み状況に応じて相部屋でも構わない方は、お一人29,700円（税込）にてご案内いたします。</span></td>
                             </tr>
                             <tr data-reveal>
                                 <th scope="row">設備</th>
@@ -1850,8 +1851,8 @@
                         <label for="f-room">お部屋のご希望</label>
                         <select id="f-room" name="お部屋のご希望">
                             <option value="シングルルーム希望">シングルルーム希望（33,000円）</option>
-                            <option value="2名1室希望">2名1室希望 — ご夫婦・親子・ご兄弟など（お一人30,000円）</option>
-                            <option value="相談したい">相談したい</option>
+                            <option value="同室希望">ご夫婦・親子・ご兄弟等で同室希望（29,700円／お一人）</option>
+                            <option value="相部屋でも可">お申込み状況に応じて相部屋でも構いません（29,700円）</option>
                         </select>
                     </div>
                     <div class="form-row">
