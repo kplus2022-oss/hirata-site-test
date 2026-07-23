@@ -106,8 +106,11 @@
             overflow-x: hidden;
             letter-spacing: var(--tracking-body);
             -webkit-font-smoothing: antialiased;
-            word-break: keep-all;
-            overflow-wrap: break-word;
+            line-break: strict;
+            word-break: normal;
+            word-break: auto-phrase;
+            overflow-wrap: anywhere;
+            text-wrap: pretty;
         }
         .font-en {
             font-family: 'Cormorant Garamond', serif;
@@ -220,7 +223,7 @@
             color: var(--text-main);
             text-align: center;
             text-wrap: pretty;
-            word-break: normal;
+            word-break: auto-phrase;
             line-break: strict;
         }
         .detail-prose p {
@@ -234,7 +237,7 @@
             color: var(--text-main);
             text-align: center;
             text-wrap: pretty;
-            word-break: normal;
+            word-break: auto-phrase;
             line-break: strict;
         }
         .nav-card-link,
@@ -256,8 +259,8 @@
             font-weight: 300;
             color: var(--text-main);
             text-wrap: balance;
-            word-break: keep-all;
-            overflow-wrap: normal;
+            word-break: auto-phrase;
+            overflow-wrap: anywhere;
         }
         .nav-card-title-sub {
             display: block;
@@ -274,8 +277,8 @@
             font-weight: 300;
             color: var(--text-main);
             text-wrap: balance;
-            word-break: keep-all;
-            overflow-wrap: normal;
+            word-break: auto-phrase;
+            overflow-wrap: anywhere;
         }
         .detail-card-subtitle {
             display: block;
@@ -320,8 +323,9 @@
         }
         .message-copy {
             overflow-wrap: anywhere;
-            word-break: keep-all;
+            word-break: auto-phrase;
             text-wrap: pretty;
+            line-break: strict;
         }
 
         /* --- タイムライン（沿革）のアニメーション --- */
@@ -389,7 +393,7 @@
         }
         .timeline-content {
             text-wrap: pretty;
-            word-break: normal;
+            word-break: auto-phrase;
             line-break: strict;
         }
         .timeline-title {
@@ -401,12 +405,12 @@
             line-height: 2.2;
             letter-spacing: 0.06em;
             text-wrap: pretty;
-            word-break: normal;
+            word-break: auto-phrase;
             line-break: strict;
         }
         .timeline-intro-copy {
             text-wrap: pretty;
-            word-break: normal;
+            word-break: auto-phrase;
             line-break: strict;
         }
         /* 大きめの画面では左右交互配置 */
@@ -563,23 +567,10 @@
                 </div>
 
                 <div class="message-copy text-[15px] sm:text-base md:text-xl leading-[2.2] sm:leading-[2.5] md:leading-[3] tracking-[0.08em] sm:tracking-[0.2em] text-[var(--text-main)] reveal space-y-10 sm:space-y-12 md:space-y-16">
-                    <p>
-                        私たちの命には、終わりがあります。<br>
-                        その事実から目を背けるのではなく、静かに見つめること。
-                    </p>
-                    <p>
-                        「限られた時間を、どう生きるか」<br>
-                        その問いから、この場所は生まれました。
-                    </p>
-                    <p>
-                        妻との歩み、酵素・温熱療法、ホリスティック教育、そして芸術。<br>
-                        一見ばらばらに見えるこれらは、すべて一つの命の流れの中にあります。
-                    </p>
-                    <p>
-                        ここは、何かを強く主張する場所ではなく、<br>
-                        静かに立ち止まり、命のつながりを感じていただくための<br>
-                        小さな庭のような場所です。
-                    </p>
+                    <p>私たちの命には、終わりがあります。その事実から目を背けるのではなく、静かに見つめること。</p>
+                    <p>「限られた時間を、どう生きるか」その問いから、この場所は生まれました。</p>
+                    <p>妻との歩み、酵素・温熱療法、ホリスティック教育、そして芸術。一見ばらばらに見えるこれらは、すべて一つの命の流れの中にあります。</p>
+                    <p>ここは、何かを強く主張する場所ではなく、静かに立ち止まり、命のつながりを感じていただくための小さな庭のような場所です。</p>
                 </div>
 
                 <div class="mt-20 sm:mt-24 md:mt-32 reveal reveal-delay-1 text-center">
@@ -685,29 +676,14 @@
             <div class="py-16 sm:py-24 md:py-40 px-4 sm:px-6 max-w-5xl mx-auto">
                 <div class="max-w-3xl mx-auto text-sm sm:text-base md:text-xl leading-[2.2] sm:leading-[2.5] md:leading-[3] tracking-[0.15em] sm:tracking-[0.2em] text-[var(--text-main)] reveal space-y-8 sm:space-y-10 md:space-y-12 text-center">
                     <p class="text-[var(--text-light)] text-xs sm:text-sm md:text-base tracking-[0.35em] sm:tracking-[0.4em] text-center">－ 平田進一郎 －</p>
-                    <p>
-                        振り返れば、<br>
-                        一つひとつの出来事が、今へとつながっています。
-                    </p>
-                    <p>
-                        これまで、さまざまな経験の中で、<br>
-                        人との出会い、別れ、そして変化を重ねてきました。
-                    </p>
-                    <p>
-                        その中で、<br>
-                        「人はどう生きるのか」という問いが、<br>
-                        静かに自分の中に残り続けてきたように思います。
-                    </p>
-                    <p>
-                        ホリスティックという考え方に出会い、<br>
-                        体と心、そして命が一つの流れの中にあることを知りました。<br>
-                        また、人生の中での大きな別れは、<br>
-                        命の意味をあらためて見つめる時間となりました。
-                    </p>
+                    <p>振り返れば、一つひとつの出来事が、今へとつながっています。</p>
+                    <p>これまで、さまざまな経験の中で、人との出会い、別れ、そして変化を重ねてきました。</p>
+                    <p>その中で、「人はどう生きるのか」という問いが、静かに自分の中に残り続けてきたように思います。</p>
+                    <p>ホリスティックという考え方に出会い、体と心、そして命が一つの流れの中にあることを知りました。また、人生の中での大きな別れは、命の意味をあらためて見つめる時間となりました。</p>
                     <p class="about-closing-copy text-center text-[var(--text-main)]">
-                        <span>「メメントモリ」という言葉は、<br>今も私の中に静かに残っています。</span>
-                        <span>死を想うことは、今をどう生きるかを<br>問い直すことでもあります。</span>
-                        <span>このページでは、これまでの歩みを<br>静かに振り返ってみたいと思います。</span>
+                        <span>「メメントモリ」という言葉は、今も私の中に静かに残っています。</span>
+                        <span>死を想うことは、今をどう生きるかを問い直すことでもあります。</span>
+                        <span>このページでは、これまでの歩みを静かに振り返ってみたいと思います。</span>
                     </p>
                 </div>
 
@@ -857,15 +833,15 @@
             
             <div class="py-16 sm:py-24 md:py-40 px-4 sm:px-6 max-w-5xl mx-auto">
                 <div class="detail-prose reveal space-y-8 sm:space-y-10">
-                    <p>メメントモリとは、<br>本来「死を想え」という意味を持つ言葉です。</p>
-                    <p>しかし私にとってそれは、<br>死を見つめることではなく、<br>今をどう生きるかという問いです。</p>
-                    <p>命が有限であることを知るとき、<br>一日一日が、かけがえのないものとして<br>立ち上がってきます。</p>
-                    <p>これまでの人生の中で、<br>さまざまな出会いと別れを経験してきました。</p>
-                    <p>その中で、<br>人は何を大切にして生きるのか、<br>何が本当に必要なのか、<br>繰り返し問い続けてきたように思います。</p>
-                    <p>メメントモリという言葉は、<br>その問いの中で自然に残ったものです。</p>
-                    <p>死を想うことは、<br>今という時間を深く生きること。</p>
-                    <p>そしてそれは、<br>特別なことではなく、<br>日々の中にあるものだと感じています。</p>
-                    <p>医療、教育、芸術、そして体を動かすこと。<br>一見異なるこれらの営みも、<br>すべては「命をどう生きるか」という<br>一つの問いへとつながっています。</p>
+                    <p>メメントモリとは、本来「死を想え」という意味を持つ言葉です。</p>
+                    <p>しかし私にとってそれは、死を見つめることではなく、今をどう生きるかという問いです。</p>
+                    <p>命が有限であることを知るとき、一日一日が、かけがえのないものとして立ち上がってきます。</p>
+                    <p>これまでの人生の中で、さまざまな出会いと別れを経験してきました。</p>
+                    <p>その中で、人は何を大切にして生きるのか、何が本当に必要なのか、繰り返し問い続けてきたように思います。</p>
+                    <p>メメントモリという言葉は、その問いの中で自然に残ったものです。</p>
+                    <p>死を想うことは、今という時間を深く生きること。</p>
+                    <p>そしてそれは、特別なことではなく、日々の中にあるものだと感じています。</p>
+                    <p>医療、教育、芸術、そして体を動かすこと。一見異なるこれらの営みも、すべては「命をどう生きるか」という一つの問いへとつながっています。</p>
                 </div>
             </div>
         </section>
@@ -887,12 +863,12 @@
             <div class="py-16 sm:py-24 md:py-40 px-4 sm:px-6 max-w-6xl mx-auto text-center">
                 <div class="detail-prose reveal space-y-8 sm:space-y-10">
                     <p>命を温めるということ</p>
-                    <p>温熱療法は、<br>亡き妻と共に歩んできた取り組みです。</p>
+                    <p>温熱療法は、亡き妻と共に歩んできた取り組みです。</p>
                     <p>体を温めること。</p>
-                    <p>それは単に体調を整えることではなく、<br>命の力に、静かに働きかけていくものだと感じています。</p>
-                    <p>さまざまな経験の中で、<br>人の体と心は密接につながっていることを<br>実感してきました。</p>
-                    <p>その中で、<br>温めるという行為が持つ意味の深さに触れ、<br>この道を歩むことになりました。</p>
-                    <p>現在、その取り組みは<br>形を変えながら各地のサロンへと受け継がれています。</p>
+                    <p>それは単に体調を整えることではなく、命の力に、静かに働きかけていくものだと感じています。</p>
+                    <p>さまざまな経験の中で、人の体と心は密接につながっていることを実感してきました。</p>
+                    <p>その中で、温めるという行為が持つ意味の深さに触れ、この道を歩むことになりました。</p>
+                    <p>現在、その取り組みは形を変えながら各地のサロンへと受け継がれています。</p>
                 </div>
                 
                 <div class="mt-16 sm:mt-20 reveal border-t border-[var(--border-color)] pt-12 sm:pt-16">
@@ -959,16 +935,16 @@
                 <div class="detail-prose reveal space-y-8 sm:space-y-10">
                     <p>ホリスティックという視点</p>
                     <p>体、心、命。</p>
-                    <p>それぞれは分かれているものではなく、<br>一つの流れの中にあるものだと感じています。</p>
-                    <p>これまでの経験の中で、<br>食事や心の在り方が、<br>人の状態に大きく影響することを実感してきました。</p>
-                    <p>その流れの中で、<br>海外の教育機関との提携を基盤として、<br>丸元康生氏の実践的な栄養学を伝える取り組みを行ってきました。</p>
-                    <p>栄養学の視点から命を捉える学びへと<br>さらに深まっていきました。</p>
-                    <p>現在は、<br>それらの経験をもとに、<br>ホリスティック栄養学を日本において体系的に伝える場として、<br>ホリスティックカレッジ・オブ・ジャパンの活動につながっています。</p>
+                    <p>それぞれは分かれているものではなく、一つの流れの中にあるものだと感じています。</p>
+                    <p>これまでの経験の中で、食事や心の在り方が、人の状態に大きく影響することを実感してきました。</p>
+                    <p>その流れの中で、海外の教育機関との提携を基盤として、丸元康生氏の実践的な栄養学を伝える取り組みを行ってきました。</p>
+                    <p>栄養学の視点から命を捉える学びへとさらに深まっていきました。</p>
+                    <p>現在は、それらの経験をもとに、ホリスティック栄養学を日本において体系的に伝える場として、ホリスティックカレッジ・オブ・ジャパンの活動につながっています。</p>
                 </div>
                 
                 <div class="mt-16 sm:mt-20 reveal border-t border-[var(--border-color)] pt-12 sm:pt-16">
                     <div class="max-w-5xl mx-auto glass-panel border border-[var(--border-color)] px-6 sm:px-10 py-8 sm:py-10 text-center flex flex-col items-center">
-                        <p class="detail-note mb-8 sm:mb-10">講座や活動の詳細は公式サイトへ。<br>あわせて、小さなリトリートのご案内も添えています。</p>
+                        <p class="detail-note mb-8 sm:mb-10">講座や活動の詳細は公式サイトへ。あわせて、小さなリトリートのご案内も添えています。</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-stretch w-full">
                             <div class="flex h-full flex-col items-center text-center">
                                 <a href="https://www.holisticcollege.jp/" target="_blank" rel="noopener noreferrer" class="group block w-full transition-transform duration-700 ease-out hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-color)]">
@@ -976,7 +952,7 @@
                                         <img src="./素材/holisticcollege.png" alt="ホリスティックカレッジ・オブ・ジャパン（公式サイトを新しいタブで開く）" class="h-full w-full object-cover object-left opacity-95 transition-opacity duration-500 group-hover:opacity-100" decoding="async">
                                     </span>
                                 </a>
-                                <p class="mt-5 text-xs sm:text-sm leading-[2.2] tracking-[0.1em] text-[var(--text-light)]">ホリスティック栄養学を中心に、<br>講座や実践の場をご案内しています。</p>
+                                <p class="mt-5 text-xs sm:text-sm leading-[2.2] tracking-[0.1em] text-[var(--text-light)]">ホリスティック栄養学を中心に、講座や実践の場をご案内しています。</p>
                                 <a href="https://www.holisticcollege.jp/" target="_blank" rel="noopener noreferrer" class="mt-6 sm:mt-8 inline-flex min-h-16 w-full max-w-md items-center justify-center border border-[var(--border-color)] px-5 sm:px-8 py-3.5 sm:py-4 text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.18em] text-[var(--text-main)] leading-relaxed rounded-sm transition-all duration-700 hover:border-[var(--text-main)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-color)]">
                                     ホリスティックカレッジ・オブ・ジャパン公式サイト
                                 </a>
@@ -987,7 +963,7 @@
                                         <img src="./素材/retreat_banner.jpg" alt="Holistic Retreat（リトリートサイトを新しいタブで開く）" class="h-full w-full object-cover object-center opacity-90 transition-opacity duration-500 group-hover:opacity-100" decoding="async">
                                     </span>
                                 </a>
-                                <p class="mt-5 text-xs sm:text-sm leading-[2.2] tracking-[0.1em] text-[var(--text-light)]">映画と対話、やさしい食事、静かな宿泊を通して、<br>自分の内側へそっと還る一泊二日のご案内です。</p>
+                                <p class="mt-5 text-xs sm:text-sm leading-[2.2] tracking-[0.1em] text-[var(--text-light)]">映画と対話、やさしい食事、静かな宿泊を通して、自分の内側へそっと還る一泊二日のご案内です。</p>
                                 <a href="https://holistic-retreat.netlify.app/" target="_blank" rel="noopener noreferrer" class="mt-6 sm:mt-8 inline-flex min-h-16 w-full max-w-md items-center justify-center border border-[var(--border-color)] px-5 sm:px-8 py-3.5 sm:py-4 text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.18em] text-[var(--text-main)] leading-relaxed rounded-sm transition-all duration-700 hover:border-[var(--text-main)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-color)]">
                                     ホリスティックリトリートのご案内
                                 </a>
@@ -1018,8 +994,8 @@
                     <p>人生について。</p>
                     <p>芸術について。</p>
                     <p>旅について。</p>
-                    <p>日々の中でふと感じたことを、<br>静かに書き留めています。</p>
-                    <p>言葉にしきれない部分も含めて、<br>その時々の思いが、<br>少しでも伝わればと思います。</p>
+                    <p>日々の中でふと感じたことを、静かに書き留めています。</p>
+                    <p>言葉にしきれない部分も含めて、その時々の思いが、少しでも伝わればと思います。</p>
                 </div>
                 
                 <div class="mt-16 sm:mt-20 reveal border-t border-[var(--border-color)] pt-12 sm:pt-16">
@@ -1028,7 +1004,7 @@
                         <a href="https://note.com/holistic_healing/m/m8bd8bd4c65ed" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center justify-center border border-[var(--border-color)] px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base tracking-[0.16em] sm:tracking-[0.22em] text-[var(--text-main)] transition-all duration-500 hover:border-[var(--text-main)] hover:bg-[var(--bg-white)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-color)]">
                             「随想｜メメントモリに生きる」へ
                         </a>
-                        <p class="detail-note mt-6 sm:mt-7">人生・命・芸術、そして身体を動かすこと。<br>ホリスティックな感性の中で、日々の問いを静かに綴る連載です。</p>
+                        <p class="detail-note mt-6 sm:mt-7">人生・命・芸術、そして身体を動かすこと。ホリスティックな感性の中で、日々の問いを静かに綴る連載です。</p>
                     </div>
                 </div>
             </div>
@@ -1045,7 +1021,7 @@
                 </div>
 
                 <div class="text-sm sm:text-base md:text-lg leading-[2.2] sm:leading-[2.5] tracking-[0.15em] sm:tracking-[0.2em] text-[var(--text-main)] reveal text-center mb-16 sm:mb-20">
-                    <p>講演、リトリート、座談会など、この場をきっかけに、<br>対話の機会が生まれれば幸いです。</p>
+                    <p>講演、リトリート、座談会など、この場をきっかけに、対話の機会が生まれれば幸いです。</p>
                     <p class="mt-6">ご関心がありましたら、以下よりご連絡ください。</p>
                 </div>
 
