@@ -26,9 +26,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
-    <script>
-        document.documentElement.classList.toggle('local-file-preview', window.location.protocol === 'file:');
-    </script>
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -135,50 +132,6 @@
         .interactive-preview-image {
             filter: grayscale(1);
             opacity: 0.9;
-        }
-        .youtube-file-fallback {
-            display: none;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            color: white;
-        }
-        .youtube-file-fallback img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(20%) brightness(0.58);
-            transition: transform 1.2s ease, filter 1.2s ease;
-        }
-        .youtube-file-fallback span {
-            position: relative;
-            z-index: 1;
-            border: 1px solid rgba(255, 255, 255, 0.68);
-            padding: 0.8rem 1.4rem;
-            font-size: 0.72rem;
-            line-height: 1.5;
-            letter-spacing: 0.18em;
-            background: rgba(26, 25, 24, 0.52);
-            transition: background-color 0.5s ease, border-color 0.5s ease;
-        }
-        .youtube-file-fallback:hover img {
-            transform: scale(1.03);
-            filter: grayscale(10%) brightness(0.48);
-        }
-        .youtube-file-fallback:hover span {
-            border-color: white;
-            background: rgba(26, 25, 24, 0.72);
-        }
-        .local-file-preview .youtube-embed-frame {
-            display: none;
-        }
-        .local-file-preview .youtube-file-fallback {
-            display: flex;
         }
 
         @media (hover: none), (pointer: coarse) {
@@ -1010,30 +963,9 @@
 
                             <div class="mt-12 sm:mt-16 border-t border-[var(--border-color)] pt-10 sm:pt-12">
                                 <h3 class="font-en text-sm sm:text-base tracking-[0.28em] sm:tracking-[0.34em] text-[var(--text-light)]">Holistic Retreat / Trailer</h3>
-                                <div class="mt-7 sm:mt-9 grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 text-left">
-                                    <article>
-                                        <p class="font-en mb-3 text-xs sm:text-sm tracking-[0.2em] text-[var(--text-light)]">New Trailer</p>
-                                        <div class="aspect-video w-full overflow-hidden bg-[var(--text-main)]">
-                                            <iframe class="youtube-embed-frame h-full w-full border-0" src="about:blank" data-youtube-src="https://www.youtube-nocookie.com/embed/ZJJQk8aBFKA?rel=0" title="Holistic Retreat New Trailer" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                            <a href="https://www.youtube.com/watch?v=ZJJQk8aBFKA" target="_blank" rel="noopener noreferrer" class="youtube-file-fallback focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset" aria-label="Holistic Retreat New TrailerをYouTubeで見る">
-                                                <img src="https://i.ytimg.com/vi/ZJJQk8aBFKA/maxresdefault.jpg" alt="" loading="lazy" decoding="async">
-                                                <span>YouTubeで見る</span>
-                                            </a>
-                                            <noscript><a href="https://www.youtube.com/watch?v=ZJJQk8aBFKA" target="_blank" rel="noopener noreferrer">New TrailerをYouTubeで見る</a></noscript>
-                                        </div>
-                                    </article>
-                                    <article>
-                                        <p class="font-en mb-3 text-xs sm:text-sm tracking-[0.2em] text-[var(--text-light)]">Teaser</p>
-                                        <div class="aspect-video w-full overflow-hidden bg-[var(--text-main)]">
-                                            <iframe class="youtube-embed-frame h-full w-full border-0" src="about:blank" data-youtube-src="https://www.youtube-nocookie.com/embed/1Y-9n9UeVGc?rel=0" title="Holistic Retreat Teaser" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                            <a href="https://www.youtube.com/watch?v=1Y-9n9UeVGc" target="_blank" rel="noopener noreferrer" class="youtube-file-fallback focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset" aria-label="Holistic Retreat TeaserをYouTubeで見る">
-                                                <img src="https://i.ytimg.com/vi/1Y-9n9UeVGc/maxresdefault.jpg" alt="" loading="lazy" decoding="async">
-                                                <span>YouTubeで見る</span>
-                                            </a>
-                                            <noscript><a href="https://www.youtube.com/watch?v=1Y-9n9UeVGc" target="_blank" rel="noopener noreferrer">TeaserをYouTubeで見る</a></noscript>
-                                        </div>
-                                    </article>
-                                </div>
+                                <a href="https://www.youtube.com/watch?v=ZJJQk8aBFKA" target="_blank" rel="noopener noreferrer" class="mt-7 sm:mt-9 inline-flex min-h-16 w-full max-w-md items-center justify-center border border-[var(--border-color)] px-5 sm:px-8 py-3.5 sm:py-4 text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.18em] text-[var(--text-main)] leading-relaxed rounded-sm transition-all duration-700 hover:border-[var(--text-main)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-color)]">
+                                    New TrailerをYouTubeで見る
+                                </a>
                             </div>
                         </div>
 
@@ -1172,12 +1104,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (window.location.protocol !== 'file:') {
-                document.querySelectorAll('[data-youtube-src]').forEach((iframe) => {
-                    iframe.src = iframe.dataset.youtubeSrc;
-                });
-            }
-            
             // --- 1. Reveal Animation (フェードイン＆ブラー) ---
             const observerOptions = {
                 root: null,
