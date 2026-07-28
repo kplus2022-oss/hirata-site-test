@@ -25,7 +25,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="module">
+        import { loadDefaultJapaneseParser } from 'https://cdn.jsdelivr.net/npm/budoux@0.8.4/+esm';
+
+        const applyNaturalJapaneseWrap = () => {
+            const parser = loadDefaultJapaneseParser();
+            document.querySelectorAll('main h2:not(.font-en), main h3:not(.font-en), main h4:not(.font-en), main p:not(.font-en)').forEach((element) => {
+                parser.applyToElement(element);
+            });
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', applyNaturalJapaneseWrap);
+        } else {
+            applyNaturalJapaneseWrap();
+        }
+    </script>
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -109,8 +126,35 @@
             line-break: strict;
             word-break: normal;
             word-break: auto-phrase;
-            overflow-wrap: anywhere;
+            overflow-wrap: break-word;
             text-wrap: pretty;
+        }
+        section[id] {
+            scroll-margin-top: 5.5rem;
+        }
+        #site-header.is-scrolled {
+            color: var(--text-main);
+            background-color: rgba(247, 246, 242, 0.92);
+            border-bottom: 1px solid rgba(226, 224, 219, 0.75);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            mix-blend-mode: normal;
+        }
+        #site-header.is-scrolled .line-1,
+        #site-header.is-scrolled .line-2 {
+            background-color: var(--text-main);
+        }
+        #site-header.menu-active {
+            color: #FAFAFA;
+            background-color: transparent;
+            border-bottom-color: transparent;
+            -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+            mix-blend-mode: difference;
+        }
+        #site-header.menu-active .line-1,
+        #site-header.menu-active .line-2 {
+            background-color: #FAFAFA;
         }
         .font-en {
             font-family: 'Cormorant Garamond', serif;
@@ -260,7 +304,7 @@
             color: var(--text-main);
             text-wrap: balance;
             word-break: auto-phrase;
-            overflow-wrap: anywhere;
+            overflow-wrap: break-word;
         }
         .nav-card-title-sub {
             display: block;
@@ -278,7 +322,7 @@
             color: var(--text-main);
             text-wrap: balance;
             word-break: auto-phrase;
-            overflow-wrap: anywhere;
+            overflow-wrap: break-word;
         }
         .detail-card-subtitle {
             display: block;
@@ -322,7 +366,7 @@
             }
         }
         .message-copy {
-            overflow-wrap: anywhere;
+            overflow-wrap: break-word;
             word-break: auto-phrase;
             text-wrap: pretty;
             line-break: strict;
@@ -437,6 +481,10 @@
         }
         /* 小さい画面では左寄せ配置 */
         @media (max-width: 767px) {
+            #site-header.is-scrolled {
+                padding-top: 0.85rem;
+                padding-bottom: 0.85rem;
+            }
             .timeline-track {
                 padding-top: 0;
             }
@@ -470,7 +518,7 @@
         <img src="https://images.unsplash.com/photo-1586075010923-2dd4570fb338?q=80&w=2000&auto=format&fit=crop" alt="paper texture" class="w-full h-full object-cover mix-blend-multiply">
     </div>
 
-    <header class="fixed top-0 w-full z-50 text-[#FAFAFA] transition-all duration-700 py-6 sm:py-8 px-4 sm:px-6 md:px-12 flex justify-between items-center mix-blend-difference">
+    <header id="site-header" class="fixed top-0 w-full z-50 text-[#FAFAFA] transition-all duration-700 py-6 sm:py-8 px-4 sm:px-6 md:px-12 flex justify-between items-center mix-blend-difference">
         <h1 class="text-base sm:text-lg md:text-xl tracking-[0.3em] font-en font-light uppercase">
             <a href="#home" class="hover:opacity-70 transition-opacity">Adonai Holistic</a>
         </h1>
@@ -539,13 +587,13 @@
             <div class="absolute inset-0 bg-gradient-to-b from-black/18 via-black/6 to-black/44 z-10"></div>
 
             <div class="absolute inset-0 z-20 flex items-center justify-center text-center">
-                <div class="reveal active flex flex-col items-center px-4">
-                    <h2 class="text-white text-2xl sm:text-3xl md:text-4xl lg:text-[44px] tracking-[0.2em] sm:tracking-[0.4em] font-light leading-[2] drop-shadow-md">
-                        メメントモリに<br class="md:hidden">生きるということ
+                <div class="reveal active flex w-full max-w-6xl flex-col items-center px-4">
+                    <h2 class="w-full text-white text-[1.45rem] sm:text-3xl md:text-4xl lg:text-[44px] tracking-[0.16em] sm:tracking-[0.4em] font-light leading-[2] drop-shadow-md">
+                        <span class="block whitespace-nowrap md:inline">メメントモリに</span><span class="block whitespace-nowrap md:inline">生きるということ</span>
                     </h2>
-                    <p class="max-w-3xl text-white/80 text-xs sm:text-sm md:text-base tracking-[0.24em] sm:tracking-[0.34em] leading-[2.4] sm:leading-loose mt-10 sm:mt-12 md:mt-16 font-light drop-shadow-md">
-                        命が有限であるからこそ、<br class="md:hidden">今を丁寧に生きる。<br>
-                        それが、私にとってのメメントモリです。
+                    <p class="w-full max-w-3xl text-white/80 text-[0.72rem] sm:text-sm md:text-base tracking-[0.13em] sm:tracking-[0.34em] leading-[2.4] sm:leading-loose mt-8 sm:mt-12 md:mt-16 font-light drop-shadow-md">
+                        <span class="block whitespace-nowrap md:inline">命が有限であるからこそ、</span><span class="block whitespace-nowrap md:inline">今を丁寧に生きる。</span>
+                        <span class="mt-1 block whitespace-nowrap">それが、私にとってのメメントモリです。</span>
                     </p>
                 </div>
             </div>
@@ -661,11 +709,11 @@
 
         <!-- ===== ABOUT 詳細 ===== -->
         <section id="about" class="glass-panel">
-            <div class="relative h-[30svh] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
+            <div class="detail-hero relative h-[clamp(18rem,46svh,24rem)] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
                 <div class="absolute top-[-20%] left-0 w-full h-[140%] z-0 parallax-bg" data-speed="0.15">
                     <img src="./素材/DSC05132%202.JPG" alt="私について" class="w-full h-full object-cover filter grayscale-[40%] opacity-70">
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center z-10 pt-10">
+                <div class="detail-hero-overlay absolute inset-0 flex items-center justify-center z-10 pt-0 sm:pt-10">
                     <div class="text-center reveal px-4">
                         <span class="font-en text-[10px] md:text-xs tracking-[0.4em] text-white/60 uppercase block mb-4 sm:mb-6">01 / About</span>
                         <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] tracking-[0.4em] font-light text-white drop-shadow-md">私について</h2>
@@ -819,11 +867,11 @@
 
         <!-- ===== PHILOSOPHY 詳細 ===== -->
         <section id="philosophy" class="bg-[var(--bg-color)]/30">
-            <div class="relative h-[30svh] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
+            <div class="detail-hero relative h-[clamp(18rem,46svh,24rem)] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
                 <div class="absolute top-[-20%] left-0 w-full h-[140%] z-0 parallax-bg" data-speed="0.15">
                     <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=2000&auto=format&fit=crop" alt="メメントモリとは" class="w-full h-full object-cover filter grayscale-[40%] opacity-70">
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center z-10 pt-10">
+                <div class="detail-hero-overlay absolute inset-0 flex items-center justify-center z-10 pt-0 sm:pt-10">
                     <div class="text-center reveal px-4">
                         <span class="font-en text-[10px] md:text-xs tracking-[0.4em] text-white/60 uppercase block mb-4 sm:mb-6">02 / Philosophy</span>
                         <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] tracking-[0.22em] sm:tracking-[0.28em] font-light text-white drop-shadow-md leading-[1.7]">メメントモリとは</h2>
@@ -848,14 +896,17 @@
 
         <!-- ===== THERMOTHERAPY 詳細 ===== -->
         <section id="thermotherapy" class="glass-panel">
-            <div class="relative h-[30svh] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
+            <div class="detail-hero relative h-[clamp(18rem,46svh,24rem)] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
                 <div class="absolute top-[-20%] left-0 w-full h-[140%] z-0 parallax-bg" data-speed="0.15">
                     <img src="./素材/DSC05321%20%281%29.JPG" alt="温熱療法" class="w-full h-full object-cover filter grayscale-[40%] opacity-70">
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center z-10 pt-10">
+                <div class="detail-hero-overlay absolute inset-0 flex items-center justify-center z-10 pt-0 sm:pt-10">
                     <div class="text-center reveal px-4">
                         <span class="font-en text-[10px] md:text-xs tracking-[0.4em] text-white/60 uppercase block mb-4 sm:mb-6">03 / Thermotherapy</span>
-                        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] tracking-[0.18em] sm:tracking-[0.24em] font-light text-white drop-shadow-md leading-[1.8]">温熱療法<br><span class="text-base sm:text-lg md:text-xl tracking-[0.28em] sm:tracking-[0.34em]">セラピューティック温タッチ</span></h2>
+                        <h2 class="detail-hero-title text-2xl sm:text-3xl md:text-4xl lg:text-[38px] tracking-[0.18em] sm:tracking-[0.24em] font-light text-white drop-shadow-md leading-[1.8]">
+                            <span class="block">温熱療法</span>
+                            <span class="mt-2 block whitespace-nowrap text-[0.8rem] sm:text-lg md:text-xl tracking-[0.14em] sm:tracking-[0.34em]">セラピューティック温タッチ</span>
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -863,7 +914,7 @@
             <div class="py-16 sm:py-24 md:py-40 px-4 sm:px-6 max-w-6xl mx-auto text-center">
                 <div class="detail-prose reveal space-y-8 sm:space-y-10">
                     <p>命を温めるということ</p>
-                    <p>温熱療法は、亡き妻と共に歩んできた取り組みです。</p>
+                    <p>温熱療法は、<span class="nowrap">亡き妻と共に歩んできた</span><span class="nowrap">取り組みです。</span></p>
                     <p>体を温めること。</p>
                     <p>それは単に体調を整えることではなく、命の力に、静かに働きかけていくものだと感じています。</p>
                     <p>さまざまな経験の中で、人の体と心は密接につながっていることを実感してきました。</p>
@@ -919,14 +970,17 @@
 
         <!-- ===== HOLISTIC COLLEGE 詳細 ===== -->
         <section id="college" class="bg-[var(--bg-color)]/30">
-            <div class="relative h-[30svh] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
+            <div class="detail-hero relative h-[clamp(18rem,46svh,24rem)] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
                 <div class="absolute top-[-20%] left-0 w-full h-[140%] z-0 parallax-bg" data-speed="0.15">
                     <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2000&auto=format&fit=crop" alt="ホリスティックカレッジ" class="w-full h-full object-cover filter grayscale-[40%] opacity-70">
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center z-10 pt-10">
+                <div class="detail-hero-overlay absolute inset-0 flex items-center justify-center z-10 pt-0 sm:pt-10">
                     <div class="text-center reveal px-4">
                         <span class="font-en text-[10px] md:text-xs tracking-[0.4em] text-white/60 uppercase block mb-4 sm:mb-6">04 / Holistic College</span>
-                        <h2 class="text-xl sm:text-2xl md:text-4xl lg:text-[36px] tracking-[0.15em] sm:tracking-[0.25em] font-light text-white drop-shadow-md leading-[1.8]">ホリスティックカレッジ・<br>オブ・ジャパン</h2>
+                        <h2 class="text-[1.25rem] sm:text-2xl md:text-4xl lg:text-[36px] tracking-[0.1em] sm:tracking-[0.25em] font-light text-white drop-shadow-md leading-[1.8]">
+                            <span class="block whitespace-nowrap">ホリスティックカレッジ・</span>
+                            <span class="block whitespace-nowrap">オブ・ジャパン</span>
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -989,11 +1043,11 @@
 
         <!-- ===== ESSAYS 詳細 ===== -->
         <section id="essays" class="glass-panel">
-            <div class="relative h-[30svh] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
+            <div class="detail-hero relative h-[clamp(18rem,46svh,24rem)] sm:h-[40svh] md:h-[60svh] w-full overflow-hidden bg-black parallax-container">
                 <div class="absolute top-[-20%] left-0 w-full h-[140%] z-0 parallax-bg" data-speed="0.15">
                     <img src="https://images.unsplash.com/photo-1516414447565-b14be0adf13e?q=80&w=2000&auto=format&fit=crop" alt="随想" class="w-full h-full object-cover filter grayscale-[40%] opacity-70">
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center z-10 pt-10">
+                <div class="detail-hero-overlay absolute inset-0 flex items-center justify-center z-10 pt-0 sm:pt-10">
                     <div class="text-center reveal px-4">
                         <span class="font-en text-[10px] md:text-xs tracking-[0.4em] text-white/60 uppercase block mb-4 sm:mb-6">05 / Essays</span>
                         <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] tracking-[0.4em] font-light text-white drop-shadow-md">随想</h2>
@@ -1104,6 +1158,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const siteHeader = document.getElementById('site-header');
+            const handleHeaderScroll = () => {
+                siteHeader?.classList.toggle('is-scrolled', window.scrollY > 32);
+            };
+
             // --- 1. Reveal Animation (フェードイン＆ブラー) ---
             const observerOptions = {
                 root: null,
@@ -1186,6 +1245,7 @@
                     window.requestAnimationFrame(() => {
                         handleParallax();
                         handleTimelineScroll();
+                        handleHeaderScroll();
                         ticking = false;
                     });
                     ticking = true;
@@ -1193,6 +1253,7 @@
             });
             handleParallax();
             handleTimelineScroll();
+            handleHeaderScroll();
 
             // --- 3. Mobile Menu Toggle ---
             const menuBtn = document.getElementById('menu-btn');
@@ -1202,7 +1263,10 @@
             const toggleMenu = () => {
                 menuBtn.classList.toggle('menu-btn-open');
                 globalMenu.classList.toggle('menu-open');
-                document.body.style.overflow = globalMenu.classList.contains('menu-open') ? 'hidden' : '';
+                const menuIsOpen = globalMenu.classList.contains('menu-open');
+                siteHeader?.classList.toggle('menu-active', menuIsOpen);
+                document.body.style.overflow = menuIsOpen ? 'hidden' : '';
+                if (!menuIsOpen) handleHeaderScroll();
             };
 
             menuBtn.addEventListener('click', toggleMenu);
