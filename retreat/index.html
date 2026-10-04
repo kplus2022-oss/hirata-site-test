@@ -1202,6 +1202,15 @@
             margin-bottom: 0.5rem;
         }
         .gaiyou-name .g-jp { font-size: 0.83rem; letter-spacing: 0.3em; color: var(--ink-soft); }
+        .gaiyou-announcement {
+            max-width: 32em;
+            margin: 1.2rem auto 0;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 2;
+            letter-spacing: 0;
+            color: var(--ink);
+        }
         .gaiyou-table { width: 100%; table-layout: fixed; border-collapse: collapse; }
         .gaiyou-table th, .gaiyou-table td {
             text-align: left;
@@ -1896,6 +1905,7 @@
                 <div class="gaiyou-card veil" data-reveal>
                     <div class="gaiyou-name">
                         <span class="g-en">Holistic Retreat</span>
+                        <p class="gaiyou-announcement">2027年は、2月から5月の日程を本年11月までにお知らせします</p>
                     </div>
                     <table class="gaiyou-table">
                         <tbody>
@@ -1935,7 +1945,6 @@
                     <div class="gaiyou-cta">
                         <a href="#apply" class="btn fill magnetic"><span class="btn-bg"></span><span>受付状況を見る</span></a>
                         <p class="small-note gaiyou-note">両日程とも満室となり、お申し込み受付を終了しました。</p>
-                        <p class="small-note gaiyou-note">2027年は、2月から5月の日程を本年11月までにお知らせします</p>
                     </div>
                 </div>
             </div>
@@ -2223,7 +2232,7 @@
             var SELECTORS = [
                 '.poem-line', '.lead p', '.day-card p', '.day-card .d-title',
                 '.room-list li', '.anata-list li', '.anata-close',
-                '.gaiyou-table td', '.gaiyou-table td .sub',
+                '.gaiyou-table td', '.gaiyou-table td .sub', '.gaiyou-announcement',
                 '.faci-card p', '.apply-intro p', '.small-note',
                 '.apply-alt', '.hero-jp', '.faci-name-role',
                 '.interlude-word .sub-jp', '.meal-badge .mb-jp',
