@@ -215,7 +215,14 @@ main p { text-wrap: pretty; }
 .form-row label, .form-fieldset legend { font-size: 1.125rem; letter-spacing: .05em; color: var(--ink); margin-bottom: .6rem; line-height: 1.9; font-weight: 500; }
 .form-row input:not([type=checkbox]), .form-row select, .form-row textarea { width: 100%; font-size: 1.125rem; line-height: 1.7; min-height: 52px; padding: .7rem .8rem; background: rgba(255,255,255,.35); border: 1px solid #7A7875; border-radius: 0; letter-spacing: .02em; }
 .form-row textarea { min-height: 160px; resize: vertical; }
-.form-row select { padding-right: 2.2rem; width: 100%; text-overflow: ellipsis; }
+/* 選択欄: 右端に区切り線と▼印を置き、押すと選べる欄だと一目でわかるようにする */
+.form-row select { padding-right: 3.6rem; width: 100%; text-overflow: ellipsis; cursor: pointer; -webkit-appearance: none; appearance: none;
+  background-color: rgba(255,255,255,.35);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%232A2825' stroke-width='1.6'/%3E%3C/svg%3E"), linear-gradient(#7A7875, #7A7875);
+  background-repeat: no-repeat;
+  background-position: right 1rem center, right 2.9rem center;
+  background-size: 14px 8px, 1px 1.8rem; }
+.form-row select:hover { background-color: rgba(255,255,255,.65); }
 .form-row input:focus, .form-row textarea:focus, .form-row select:focus { outline: 2px solid var(--ink); outline-offset: 3px; }
 .optional, .req { display: inline-block; margin-left: .5em; font-size: 1rem !important; color: var(--ink) !important; font-weight: 400; }
 .req { text-decoration: underline; text-underline-offset: .25em; }
