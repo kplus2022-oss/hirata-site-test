@@ -30,11 +30,15 @@
   const DUST = { day: '#ad8e58', dusk: '#d39a62', night: '#efe3c6', evening: '#c39565', morning: '#c19f69' };
   const SCENES = [
     ['#intro', '手紙', 'Letter'], ['.film-dusk', '上映', 'Film', true], ['.film-questions', '語らい', 'Dialogue', true],
-    ['.film-copy-rest', '語らい', 'Dialogue', true], ['.interlude-lights', '語らい', 'Dialogue'],
+    ['.film-copy-rest', '語らい', 'Dialogue'],
     ['#gaiyou', '開催日程', 'Invitation'], ['#topics', '五つの入口', 'Perspectives'], ['.interlude-gather', '食卓へ', 'Together'],
     ['#basho', '場所', 'The Place'], ['#taberu', '食べる', 'Nourish'], ['#yasumu', '休む', 'Rest', true],
     ['.interlude-morning', '翌朝', 'Morning'], ['#anata', 'このような方へ', 'For You'], ['#saigoni', '結び', 'Closing'], ['#apply', 'お申し込み', 'Application']
   ];
+  /* 明かりが戻る位置：問いの舞台（画面に固定）が流れ出す何画面分手前か。
+     qEnd で問い・ラベル・光が消え終わり、start〜end の間（画面に文字がない間）に夜色から生成りへ戻す */
+  const LIGHTS = { qEnd: 0.62, start: 0.52, end: 0.06 };
+  const beforeRelease = k => () => 'bottom bottom+=' + Math.round((window.innerHeight || 800) * k);
 
   let ctx = null, lenis = null, particles = null, tickFn = null, listeners = null, S = null;
   let introPlayed = false, prepared = false;
@@ -237,39 +241,22 @@
       .fromTo('.film-head .sec-line', { scaleX: 0 }, { scaleX: 1, duration: 0.14 }, 0.8)
       .to({}, { duration: 0.12 });
 
-    /* 問い：映写機の光の中で、字幕のように一つずつ */
+    /* 問い：映写機の光の中で、字幕のように一つずつ。
+       最後の問いも消えて画面に文字がなくなったら、その間に明かりが戻る（buildScene の lights） */
     const qs = all('.film-questions .q-list p');
     if (qs.length) {
-      const q = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.film-questions', start: 'top 75%', end: 'bottom bottom', scrub: 0.8 } });
+      const q = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.film-questions', start: 'top 75%', end: beforeRelease(LIGHTS.qEnd), scrub: 0.8 } });
       q.fromTo('.film-beam', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0).fromTo('.q-label', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.2);
       qs.forEach((p, i) => {
-        const at = 0.9 + i * 1.6;
+        const at = 0.9 + i * 1.6, last = i === qs.length - 1;
         q.fromTo(p, { opacity: 0, y: 34, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, at);
-        if (i < qs.length - 1) q.to(p, { opacity: 0, y: -28, filter: 'blur(8px)', duration: 0.5, ease: 'power2.in' }, at + 1.1);
+        q.to(p, { opacity: 0, y: -28, filter: 'blur(8px)', duration: 0.5, ease: 'power2.in' }, at + (last ? 1.5 : 1.1));
       });
-      q.to({}, { duration: 0.7 }, 4.7);
-      q.fromTo('.q-meter span', { scaleX: 0 }, { scaleX: 1, duration: q.duration() }, 0);
+      const out = 0.9 + (qs.length - 1) * 1.6 + 1.6;
+      q.to(['.q-label', '.film-beam', '.q-meter'], { opacity: 0, duration: 0.4 }, out);
+      q.to({}, { duration: 0.1 }, out + 0.4);
+      q.fromTo('.q-meter span', { scaleX: 0 }, { scaleX: 1, duration: out }, 0);
     }
-  }
-
-  /* ---------- 上映のあと：小さな窓が全面に広がり、明かりが戻る ---------- */
-  function buildLights() {
-    const sec = $('.interlude-lights');
-    if (!sec) return;
-    const frame = $('.media-full', sec), img = $('img', sec);
-    gsap.set(frame, { '--t': '30%', '--r': '28%', '--b': '30%', '--l': '28%' });
-    gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top top', scrub: true } })
-      .to(frame, { '--t': '0%', '--r': '0%', '--b': '0%', '--l': '0%', ease: 'power2.inOut', duration: 1 }, 0)
-      .fromTo(img, { scale: 1.25 }, { scale: 1.08, ease: 'none', duration: 1 }, 0)
-      .fromTo($('.interlude-en', sec), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 }, 0.5);
-    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: 0.8 } })
-      .to($('.interlude-en', sec), { opacity: 0, duration: 0.18 }, 0.12)
-      .to($('.lights-dim', sec), { opacity: 0, duration: 0.45, ease: 'power1.inOut' }, 0.1)
-      .fromTo($('.lights-glow', sec), { opacity: 0 }, { opacity: 0.9, duration: 0.3 }, 0.25)
-      .to(img, { scale: 1, duration: 0.6 }, 0)
-      .to($('.lights-glow', sec), { opacity: 0, duration: 0.25 }, 0.62)
-      .to([frame, $('.interlude-caption', sec)], { opacity: 0, duration: 0.25 }, 0.72)
-      .to({}, { duration: 0.06 });
   }
 
   /* ---------- 写真：幕が上がるように現れ、中で静かに視差 ---------- */
@@ -381,7 +368,7 @@
     S = {
       open: ScrollTrigger.create({ trigger: '.film-dusk', start: 'top bottom', end: 'top top' }),
       night: ScrollTrigger.create({ trigger: '.film-dusk', start: 'top top', end: vh(0.35) }),
-      lights: ScrollTrigger.create({ trigger: '.interlude-lights', start: 'top top', end: vh(0.35) }),
+      lights: ScrollTrigger.create({ trigger: '.film-questions', start: beforeRelease(LIGHTS.start), end: beforeRelease(LIGHTS.end) }),
       sand: ScrollTrigger.create({ trigger: '#basho', start: 'top 70%', endTrigger: '#taberu', end: 'top 40%' }),
       morning: ScrollTrigger.create({ trigger: '.interlude-morning', start: 'top bottom', end: 'bottom top' })
     };
@@ -452,7 +439,6 @@
         buildScene();
         buildHero(mobile);
         buildFilm(mobile);
-        buildLights();
         buildReveals(mobile, keepVisible);
         buildPhotos(mobile, keepVisible);
         buildPanels(mobile);

@@ -448,7 +448,7 @@ main > section { overflow-x: clip; }
 .film-dusk-stage { display: flex; flex-direction: column; }
 .film-head { order: -1; width: min(1120px, calc(100% - 96px)); margin-inline: auto; }
 .film-dusk .film-figure { width: 100%; }
-.film-screen-img, .film-ghost, .film-screen-glow, .film-flare, .film-nightfall, .film-dim, .film-scrim, .film-beam, .q-label, .q-meter, .lights-dim, .lights-glow, .interlude-leak, .morning-night { display: none; }
+.film-screen-img, .film-ghost, .film-screen-glow, .film-flare, .film-nightfall, .film-dim, .film-scrim, .film-beam, .q-label, .q-meter, .interlude-leak, .morning-night { display: none; }
 .film-questions { width: min(1120px, calc(100% - 96px)); margin: 1.5em auto 0; padding-left: calc(240px + clamp(3rem, 8vw, 8rem)); }
 .film-questions .q-list p { font-size: var(--reading-size); line-height: 2.2; letter-spacing: .055em; max-width: var(--reading-width); }
 .film-questions .q-list p + p { margin-top: 1.5em; }
@@ -475,7 +475,7 @@ html.motion-boot .film-head { visibility: hidden; }
 @media (max-aspect-ratio: 9/10) { html:is(.motion-ready, .motion-boot) .film-frame > img { object-position: 82% 50%; } }
 
 /* 問い：映写機の光の中で、字幕のように一つずつ */
-html:is(.motion-ready, .motion-boot) .film-questions { height: 380vh; width: auto; margin: 0; padding: 0; }
+html:is(.motion-ready, .motion-boot) .film-questions { height: 460vh; width: auto; margin: 0; padding: 0; }
 html:is(.motion-ready, .motion-boot) .film-questions-stage { position: sticky; top: 0; height: 100vh; display: grid; place-items: center; overflow: hidden; }
 html:is(.motion-ready, .motion-boot) .film-beam { display: block; position: absolute; left: 50%; top: -10%; width: min(1100px, 140vw); height: 120%; transform: translateX(-50%); pointer-events: none; background: radial-gradient(ellipse 50% 70% at 50% 0%, rgba(255,236,205,.1), rgba(255,236,205,0) 70%); clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%); opacity: 0; animation: retreat-flicker 5s ease-in-out infinite; }
 @keyframes retreat-flicker { 0%, 100% { filter: brightness(1); } 45% { filter: brightness(1.08); } 47% { filter: brightness(.94); } 50% { filter: brightness(1.05); } }
@@ -483,16 +483,9 @@ html:is(.motion-ready, .motion-boot) .q-label { display: block; position: absolu
 html:is(.motion-ready, .motion-boot) .q-list { position: relative; width: min(980px, calc(100% - 40px)); height: 7.5em; }
 html:is(.motion-ready, .motion-boot) .film-questions .q-list p { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; max-width: none; text-align: center; font-size: clamp(1.5rem, 3.4vw, 2.75rem); line-height: 1.75; letter-spacing: .14em; opacity: 0; }
 html:is(.motion-ready, .motion-boot) .q-meter { display: block; position: absolute; bottom: 18%; left: 50%; width: 120px; height: 1px; transform: translateX(-50%); background: rgba(237,231,219,.2); }
+/* 最後の問いが消えたあと、文字のない画面で明かりが戻る。続く語らいの本文は生成りの地に墨の文字（Intermissionは削除、ユーザー指示 2026-11-09） */
+html:is(.motion-ready, .motion-boot) .film-copy-rest { --ink: #2A2825; --ink-soft: #7A7875; --line: #E2E0DB; color: var(--ink); }
 .q-meter span { display: block; height: 100%; background: var(--gold); transform-origin: left; transform: scaleX(0); }
-
-/* 上映のあと：小さな窓が全面に広がり、明かりが戻る */
-html:is(.motion-ready, .motion-boot) .interlude-lights { height: 220vh; background: transparent; overflow: visible; }
-html:is(.motion-ready, .motion-boot) .interlude-lights .interlude-stage { position: sticky; top: 0; height: 100vh; }
-html:is(.motion-ready, .motion-boot) .interlude-lights .interlude-stage::before, html:is(.motion-ready, .motion-boot) .interlude-lights .interlude-stage::after { display: none; }
-html:is(.motion-ready, .motion-boot) .interlude-lights .media-full { --t: 30%; --r: 28%; --b: 30%; --l: 28%; clip-path: inset(var(--t) var(--r) var(--b) var(--l)); }
-html:is(.motion-ready, .motion-boot) .interlude-lights .media-full > img { top: 0; height: 100%; }
-html:is(.motion-ready, .motion-boot) .lights-dim { display: block; position: absolute; inset: 0; z-index: 1; background: #211E19; opacity: .78; pointer-events: none; }
-html:is(.motion-ready, .motion-boot) .lights-glow { display: block; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at 50% 40%, rgba(255,246,228,.85), rgba(255,240,215,.35) 40%, rgba(255,240,215,0) 75%); mix-blend-mode: screen; opacity: 0; }
 
 /* 食卓へ・翌朝：写真の下を斜めの光が通る（文字の幕の下） */
 html.motion-ready .interlude-leak { display: block; position: absolute; inset: -20% -60%; z-index: 0; pointer-events: none; background: linear-gradient(100deg, rgba(255,238,205,0) 30%, rgba(255,236,200,.45) 48%, rgba(255,238,205,0) 64%); mix-blend-mode: screen; opacity: 0; }
@@ -528,7 +521,6 @@ html.motion-ready #yasumu { clip-path: inset(var(--pi, 0%) round var(--prad, 0px
   .film-questions { width: calc(100% - 44px); padding-left: 0; }
   .film-copy-spacer { display: none; }
   html:is(.motion-ready, .motion-boot) .film-head .sec-title { font-size: 1.6rem; }
-  .interlude-lights .media-full img { object-position: 22% center; }
 }
 
 /* ============================================================
